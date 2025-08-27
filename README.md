@@ -1,14 +1,13 @@
-# VapourSynth NumPy 2.0 Fix (Works with ANY Video Player)
-### 🎯 Fix for "numpy.core.multiarray failed to import" error on older GPUs
+# VapourSynth NumPy Fix - GTX 1650/1660 Frame Interpolation 
+### 🎯 Fix "numpy.core.multiarray failed to import" error (NumPy 1.26.4 solution)
 
-> **THE SOLUTION:** It's not Python 3.12 that's broken - it's NumPy 2.0! This fixes VapourSynth for frame interpolation, video processing, and works with SVP4, mpv, MPC-HC, PotPlayer, or any player.
+> **THE PROBLEM:** NumPy 2.0 breaks VapourSynth. This installer fixes it by using NumPy 1.26.4.
 
 ## ⚠️ MASSIVE DOWNLOAD WARNING
 **The full installer downloads:**
 - PyTorch with CUDA 11.8: **~2-3 GB** 
-- NVIDIA CUDA Toolkit (if needed): **~2-8 GB**
 - Other dependencies: **~500 MB**
-- **TOTAL: Up to 11GB if you need full CUDA!**
+- **TOTAL: ~3.5GB OF DOWNLOADS**
 
 **TIP:** Run `VapourSynth_Installer_TEST.py` FIRST - it verifies everything WITHOUT downloading gigabytes!
 
@@ -24,7 +23,7 @@
 ```bash
 python VapourSynth_Installer_TEST.py
 ```
-This runs in seconds and verifies your setup WITHOUT downloading gigabytes!
+This runs in seconds and verifies your setup WITHOUT downloading 3.5GB!
 
 ### Option 2: Direct Install (WARNING: 3.5GB DOWNLOAD)
 ```bash
@@ -38,14 +37,6 @@ pip install vapoursynth==72
 python VapourSynth_Installer.py
 ```
 Creates a complete virtual environment but downloads 3.5GB of packages!
-
-## ✅ What This Fixes
-
-- VapourSynth frame interpolation with **any video player**
-- Works with SVP4, mpv, MPC-HC, PotPlayer
-- Video processing scripts and filters
-- AI upscaling tools that use VapourSynth
-- ANY software that depends on VapourSynth + NumPy
 
 ## ✅ Verified Working Configuration
 
@@ -63,7 +54,7 @@ Creates a complete virtual environment but downloads 3.5GB of packages!
 - **CPU:** AMD Ryzen 7 4800HS (8-core)
 - **Performance:** 1080p@60fps uses only 40% GPU!
 
-## 📊 Performance Benchmarks
+## 📊 Performance Benchmarks (with SVP4 + PotPlayer)
 
 | Resolution | Target FPS | GPU Usage | Status |
 |------------|------------|-----------|---------|
@@ -72,15 +63,19 @@ Creates a complete virtual environment but downloads 3.5GB of packages!
 | 4K | 60fps | 90% | Works |
 | Anime | 144fps | 60% | Great |
 
-## 🔧 Example: PotPlayer + SVP4 Configuration
+## 🔧 PotPlayer + SVP4 Setup (Tested Working)
 
-1. Start SVP4 Manager (if using SVP4)
+1. Start SVP4 Manager
 2. Open PotPlayer
-3. Press **F5 → Video → VapourSynth** (NOT AviSynth!)
+3. Press **F5** → **Video** → **VapourSynth** (NOT AviSynth!)
 4. Enable VapourSynth
-5. SVP4 tray icon shows "Active"
+5. Load your VapourSynth script if needed:
+   - Go to VapourSynth settings
+   - Browse to your `.vpy` script location
+   - Or let SVP4 auto-detect PotPlayer
+6. SVP4 tray icon shows "Active" when playing video
 
-**Note:** This fix works with ANY player that uses VapourSynth, not just PotPlayer!
+**Note:** Other players may work but PotPlayer is confirmed and easy to setup.
 
 ## 🎯 The Key Discovery
 
@@ -103,6 +98,7 @@ The real problem is NumPy 2.0 which changed their C API. VapourSynth hasn't upda
 | NumPy 2.0 | NumPy 1.26.4 | v2.0 breaks VapourSynth bindings |
 | VapourSynth R73 | VapourSynth R72 | R73 has compatibility issues |
 | CUDA 12.x | CUDA 11.8 | PyTorch stability |
+| AviSynth mode | VapourSynth mode | Direct integration |
 | `pip install --upgrade` | Use exact versions | Prevents breaking updates |
 
 ## 🆘 Troubleshooting
@@ -113,13 +109,14 @@ pip uninstall numpy -y
 pip install numpy==1.26.4
 ```
 
-### VapourSynth not working in your player:
-- Each player has different settings (F5 in PotPlayer, preferences in mpv, etc.)
-- Make sure VapourSynth mode is enabled, not AviSynth
+### Black screen in PotPlayer:
+- Check SVP4 Manager is running
+- Verify F5 → Video → **VapourSynth** is selected (NOT AviSynth)
+- Check if VapourSynth script path is set correctly
 
 ### Poor performance on laptop:
 - Force NVIDIA GPU in Windows Graphics Settings
-- Add your video player → High Performance
+- Add PotPlayer.exe → High Performance
 
 ## 🤝 Contributing
 
@@ -131,4 +128,4 @@ MIT - Use freely, help others!
 
 ---
 
-**Remember:** You DON'T need an RTX 4090 for video processing. A GTX 1650 Mobile works great with the right setup!
+**Remember:** You DON'T need an RTX 4090 for frame interpolation. A GTX 1650 Mobile works great with the right setup!
