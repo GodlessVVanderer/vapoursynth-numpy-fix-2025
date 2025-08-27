@@ -3,6 +3,15 @@
 
 > **THE SOLUTION:** It's not Python 3.12 that's broken - it's NumPy 2.0! This repo provides the working configuration and installers.
 
+## ⚠️ MASSIVE DOWNLOAD WARNING
+**The full installer downloads:**
+- PyTorch with CUDA 11.8: **~2-3 GB** 
+- Additional CUDA libraries: **~1 GB**
+- Other dependencies: **~500 MB**
+- **TOTAL: ~3.5 GB OF DOWNLOADS**
+
+**TIP:** Run `VapourSynth_Installer_TEST.py` FIRST - it verifies everything WITHOUT downloading gigabytes!
+
 ## ⚠️ CRITICAL WARNING
 **DO NOT UPDATE THESE PACKAGES OR EVERYTHING BREAKS:**
 - NumPy MUST stay at **1.26.4** (NumPy 2.0 breaks VapourSynth!)
@@ -11,24 +20,24 @@
 
 ## 🚀 Quick Start
 
-### Option 1: Test First (Recommended)
+### Option 1: Test First (Recommended - NO DOWNLOADS!)
 ```bash
 python VapourSynth_Installer_TEST.py
 ```
-This runs in seconds and verifies your setup without downloading anything.
+This runs in seconds and verifies your setup WITHOUT downloading 3.5GB!
 
-### Option 2: Direct Install
+### Option 2: Direct Install (WARNING: 3.5GB DOWNLOAD)
 ```bash
 pip install numpy==1.26.4
-pip install torch==2.7.0+cu118 --index-url https://download.pytorch.org/whl/cu118
+pip install torch==2.7.0+cu118 --index-url https://download.pytorch.org/whl/cu118  # THIS IS 3GB!
 pip install vapoursynth==72
 ```
 
-### Option 3: Full Installer
+### Option 3: Full Installer (WARNING: 3.5GB DOWNLOAD)
 ```bash
 python VapourSynth_Installer.py
 ```
-Creates a complete virtual environment with all correct versions.
+Creates a complete virtual environment but downloads 3.5GB of packages!
 
 ## ✅ Verified Working Configuration
 
@@ -36,7 +45,7 @@ Creates a complete virtual environment with all correct versions.
 |-----------|---------|----------------|
 | **Python** | 3.12.8 | Yes, 3.12 WORKS! |
 | **NumPy** | 1.26.4 | ⚠️ NOT 2.0! |
-| **PyTorch** | 2.7.0+cu118 | CUDA 11.8 only |
+| **PyTorch** | 2.7.0+cu118 | CUDA 11.8 only (3GB download!) |
 | **VapourSynth** | R72 | Not R73+ |
 | **CUDA** | 11.8 | Better compatibility |
 
@@ -74,11 +83,8 @@ The real problem is NumPy 2.0 which changed their C API. VapourSynth hasn't upda
 
 ## 📁 Repository Contents
 
-- `VapourSynth_Installer.py` - Full installer with virtual environment
-- `VapourSynth_Installer_TEST.py` - Test version with verification (no downloads)
-- `quick_install.bat` - Direct package installation
-- `test_versions.py` - Check your current setup
-- `WARNING_DO_NOT_UPDATE.md` - Critical version lock information
+- `VapourSynth_Installer.py` - Full installer with virtual environment (DOWNLOADS 3.5GB!)
+- `VapourSynth_Installer_TEST.py` - Test version with verification (NO DOWNLOADS!)
 
 ## ❌ Common Mistakes to Avoid
 
