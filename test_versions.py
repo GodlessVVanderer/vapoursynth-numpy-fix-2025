@@ -17,10 +17,10 @@ def check_version():
     
     # Check Python version
     python_version = sys.version_info
-    print(f"\n✔ Python: {python_version.major}.{python_version.minor}.{python_version.micro}")
+    print(f"\n✓ Python: {python_version.major}.{python_version.minor}.{python_version.micro}")
     
     if python_version.major == 3 and python_version.minor == 12:
-        print("  ✔ Python 3.12 - Correct version!")
+        print("  ✓ Python 3.12 - Correct version!")
     else:
         warnings.append(f"  ⚠ Python {python_version.major}.{python_version.minor} - Should be 3.12")
     
@@ -28,10 +28,10 @@ def check_version():
     try:
         import numpy as np
         numpy_version = np.__version__
-        print(f"\n✔ NumPy: {numpy_version}")
+        print(f"\n✓ NumPy: {numpy_version}")
         
         if numpy_version.startswith("1.26"):
-            print("  ✔ NumPy 1.26 - Perfect! (NOT 2.0)")
+            print("  ✓ NumPy 1.26 - Perfect! (NOT 2.0)")
         elif numpy_version.startswith("2."):
             errors.append("  ✗ NumPy 2.0+ WILL BREAK VapourSynth! Downgrade to 1.26.4")
             print("  Fix: pip install numpy==1.26.4")
@@ -46,17 +46,17 @@ def check_version():
         torch_version = torch.__version__
         cuda_available = torch.cuda.is_available()
         
-        print(f"\n✔ PyTorch: {torch_version}")
+        print(f"\n✓ PyTorch: {torch_version}")
         
         if "+cu118" in torch_version:
-            print("  ✔ CUDA 11.8 build - Correct!")
+            print("  ✓ CUDA 11.8 build - Correct!")
         elif "+cu121" in torch_version or "+cu122" in torch_version:
             errors.append("  ✗ CUDA 12.x build - Compatibility issues!")
             print("  Fix: pip install torch==2.7.0+cu118 --index-url https://download.pytorch.org/whl/cu118")
         
         if cuda_available:
-            print(f"  ✔ CUDA is available: {torch.cuda.get_device_name(0)}")
-            print(f"  ✔ CUDA version: {torch.version.cuda}")
+            print(f"  ✓ CUDA is available: {torch.cuda.get_device_name(0)}")
+            print(f"  ✓ CUDA version: {torch.version.cuda}")
         else:
             warnings.append("  ⚠ CUDA not detected")
     except ImportError:
@@ -68,17 +68,17 @@ def check_version():
         core = vs.core
         vs_version = core.version()
         
-        print(f"\n✔ VapourSynth: {vs_version}")
+        print(f"\n✓ VapourSynth: {vs_version}")
         
         if "R72" in str(vs_version):
-            print("  ✔ VapourSynth R72 - Correct version!")
+            print("  ✓ VapourSynth R72 - Correct version!")
         elif "R73" in str(vs_version) or "R74" in str(vs_version):
             errors.append("  ✗ VapourSynth R73+ has compatibility issues! Downgrade to R72")
         
         # Test core functionality
         try:
             test_clip = core.std.BlankClip()
-            print("  ✔ VapourSynth core is functional")
+            print("  ✓ VapourSynth core is functional")
         except:
             errors.append("  ✗ VapourSynth core not working properly")
             
@@ -95,7 +95,7 @@ def check_version():
     potplayer_found = False
     for path in potplayer_paths:
         if os.path.exists(path):
-            print(f"\n✔ PotPlayer found: {path}")
+            print(f"\n✓ PotPlayer found: {path}")
             potplayer_found = True
             break
     
@@ -111,7 +111,7 @@ def check_version():
     svp4_found = False
     for path in svp4_paths:
         if os.path.exists(path):
-            print(f"\n✔ SVP4 found: {path}")
+            print(f"\n✓ SVP4 found: {path}")
             svp4_found = True
             break
     
