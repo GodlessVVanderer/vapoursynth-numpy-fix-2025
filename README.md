@@ -1,69 +1,119 @@
-# VapourSynth + SVP4 Working Setup (2025)
+# VapourSynth + SVP4 Fix for Older GPUs (2025)
+### 🎯 Frame Interpolation on GTX 1650, 1660, RTX 2060 and similar hardware
 
-## The NumPy 2.0 Problem SOLVED
+> **THE SOLUTION:** It's not Python 3.12 that's broken - it's NumPy 2.0! This repo provides the working configuration and installers.
 
-**THE ISSUE:** NumPy 2.0 breaks VapourSynth Python bindings. It's NOT a Python 3.12 problem!
+## ⚠️ CRITICAL WARNING
+**DO NOT UPDATE THESE PACKAGES OR EVERYTHING BREAKS:**
+- NumPy MUST stay at **1.26.4** (NumPy 2.0 breaks VapourSynth!)
+- VapourSynth MUST stay at **R72** (R73+ has issues)
+- PyTorch MUST stay at **2.7.0+cu118** (CUDA 12.x causes conflicts)
 
-## One-Click Installer
+## 🚀 Quick Start
 
-1. Download `install.bat`
-2. Right-click → Run as Administrator
-3. Follow the prompts
-4. Done!
+### Option 1: Test First (Recommended)
+```bash
+python VapourSynth_Installer_TEST.py
+```
+This runs in seconds and verifies your setup without downloading anything.
 
-## Manual Install (if needed)
-
+### Option 2: Direct Install
 ```bash
 pip install numpy==1.26.4
 pip install torch==2.7.0+cu118 --index-url https://download.pytorch.org/whl/cu118
-pip install vapoursynth
+pip install vapoursynth==72
 ```
 
-## Working Configuration
+### Option 3: Full Installer
+```bash
+python VapourSynth_Installer.py
+```
+Creates a complete virtual environment with all correct versions.
 
-| Component | Version | Critical |
-|-----------|---------|----------|
-| Python | 3.12.8 | ✅ Works |
-| NumPy | 1.26.4 | ⚠️ NOT 2.0 |
-| PyTorch | 2.7.0+cu118 | CUDA 11.8 |
-| VapourSynth | R72 | Stable |
+## ✅ Verified Working Configuration
 
-## PotPlayer Setup
+| Component | Version | Critical Notes |
+|-----------|---------|----------------|
+| **Python** | 3.12.8 | Yes, 3.12 WORKS! |
+| **NumPy** | 1.26.4 | ⚠️ NOT 2.0! |
+| **PyTorch** | 2.7.0+cu118 | CUDA 11.8 only |
+| **VapourSynth** | R72 | Not R73+ |
+| **CUDA** | 11.8 | Better compatibility |
+
+## 💻 Tested Hardware
+
+- **GPU:** NVIDIA GTX 1650 Mobile (4GB VRAM)
+- **CPU:** AMD Ryzen 7 4800HS (8-core)
+- **Performance:** 1080p@60fps uses only 40% GPU!
+
+## 📊 Performance Benchmarks
+
+| Resolution | Target FPS | GPU Usage | Status |
+|------------|------------|-----------|---------|
+| 1080p | 60fps | 40% | Perfect |
+| 1080p | 120fps | 70% | Smooth |
+| 4K | 60fps | 90% | Works |
+| Anime | 144fps | 60% | Great |
+
+## 🔧 PotPlayer Configuration
 
 1. Start SVP4 Manager
 2. Open PotPlayer
-3. Press F5 → Video → **VapourSynth** (NOT AviSynth!)
+3. Press **F5 → Video → VapourSynth** (NOT AviSynth!)
 4. Enable VapourSynth
-5. Play video - SVP4 should show "Active"
+5. SVP4 tray icon shows "Active"
 
-## Performance (GTX 1650 Mobile)
+## 🎯 The Key Discovery
 
-- 1080p → 60fps: 40% GPU
-- 1080p → 120fps: 70% GPU
-- 4K → 60fps: 90% GPU
-- Anime → 144fps: 60% GPU
+**Everyone says Python 3.12 doesn't work with VapourSynth - THEY'RE WRONG!**
 
-## Laptop GPU Fix
+The real problem is NumPy 2.0 which changed their C API. VapourSynth hasn't updated their bindings yet (as of August 2025), so NumPy 2.0 causes:
+- `ImportError: numpy.core.multiarray failed to import`
+- `VapourSynth has no attribute 'core'`
+- Complete failure of frame interpolation
 
-Force NVIDIA GPU:
-- Windows Settings → Graphics → PotPlayer → High Performance
-- NVIDIA Control Panel → PotPlayer → NVIDIA GPU
+## 📁 Repository Contents
 
-## Troubleshooting
+- `VapourSynth_Installer.py` - Full installer with virtual environment
+- `VapourSynth_Installer_TEST.py` - Test version with verification (no downloads)
+- `quick_install.bat` - Direct package installation
+- `test_versions.py` - Check your current setup
+- `WARNING_DO_NOT_UPDATE.md` - Critical version lock information
 
-Run the version checker:
+## ❌ Common Mistakes to Avoid
+
+| Wrong | Right | Why |
+|-------|-------|-----|
+| NumPy 2.0 | NumPy 1.26.4 | v2.0 breaks VapourSynth bindings |
+| VapourSynth R73 | VapourSynth R72 | R73 has compatibility issues |
+| CUDA 12.x | CUDA 11.8 | PyTorch stability |
+| AviSynth mode | VapourSynth mode | Direct integration |
+| `pip install --upgrade` | Use exact versions | Prevents breaking updates |
+
+## 🆘 Troubleshooting
+
+### If you accidentally updated NumPy:
 ```bash
-python check_versions.py
+pip uninstall numpy -y
+pip install numpy==1.26.4
 ```
 
-Should show:
-- NumPy 1.26.4 ✅
-- CUDA Available ✅
-- VapourSynth R72 ✅
+### Black screen in PotPlayer:
+- Check SVP4 Manager is running
+- Verify F5 → Video → **VapourSynth** is selected (NOT AviSynth)
 
-## Downloads
+### Poor performance on laptop:
+- Force NVIDIA GPU in Windows Graphics Settings
+- Add PotPlayer → High Performance
 
-- [Python 3.12](https://python.org)
-- [SVP4](https://www.svp-team.com)
-- [PotPlayer](https://potplayer.daum.net)
-- [VapourSynth R72](https://github.com/vapoursynth/vapoursynth/releases)
+## 🤝 Contributing
+
+Found an improvement? Please share! This configuration took weeks to figure out through trial and error.
+
+## 📜 License
+
+MIT - Use freely, help others!
+
+---
+
+**Remember:** You DON'T need an RTX 4090 for frame interpolation. A GTX 1650 Mobile works great with the right setup!
